@@ -1,4 +1,4 @@
-"""Exercise 1: Chardle (Wordle's little sister)"""
+"""Exercise 1: Chardle (Wordle's little sister)!"""
 
 __author__ = "730551195"
 
@@ -9,6 +9,10 @@ if len(five_character_word) != 5:
     exit()
 
 input_character: str = input("Enter a single character: ")
+
+if len(input_character) != 1:
+    print("Error: Character must be a single character.")
+    exit()
 
 instance_count: int = 0
 
@@ -34,16 +38,11 @@ if input_character == five_character_word[4]:
     print(input_character + " found at index 4")
     instance_count = instance_count + 1
 
-if instance_count > 0:
+if instance_count == 1:
+    print(str(instance_count) + " instance of " + input_character + " found in " + five_character_word)
+
+if instance_count > 1:
     print(str(instance_count) + " instances of " + input_character + " found in " + five_character_word)
 
-else:
-    print("No inststances of " + input_character + " found in " + five_character_word)
-    
-
-
-
-
-
-
-
+if instance_count < 1:
+    print("No instances of " + input_character + " found in " + five_character_word)
