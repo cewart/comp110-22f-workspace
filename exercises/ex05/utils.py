@@ -1,12 +1,12 @@
 """Exercise 5: function unit testing- function location 9/26/22."""
 
-__author__: "730551195"
+__author__ = "730551195"
 
-def only_evens(input_list: list[int]) -> list:
+
+def only_evens(input_list: list[int]) -> list[int]:
     """For a list of integers, this function will return a list of even integers from the origional list."""
     i: int = 0
-    evens_from_input: list = []
-    print(input_list)
+    evens_from_input: list[int] = list()
     while i < len(input_list):
         if len(input_list) == 0:
             return []
@@ -16,9 +16,9 @@ def only_evens(input_list: list[int]) -> list:
     return evens_from_input
 
 
-def concat(list_1: list[int], list_2: list[int]) -> list:
+def concat(list_1: list[int], list_2: list[int]) -> list[int]:
     """Given two lists, this function will create a new list that is all elements of first list followed by all elements of the second one."""
-    both_lists: list = []
+    both_lists: list[int] = list()
     i: int = 0
     while i < len(list_1):
         both_lists.append(list_1[i])
@@ -29,9 +29,10 @@ def concat(list_1: list[int], list_2: list[int]) -> list:
         i += 1
     return both_lists
 
-def sub(input_list: list[int], start_index: int, end_index: int) -> list:
+
+def sub(input_list: list[int], start_index: int, end_index: int) -> list[int]:
     """Given a list, a start index, and an end index, this funtion will create a new list of ints between and including the start and end index."""
-    bounded_list: list = []
+    bounded_list: list[int] = list()
     if start_index < 0:
         start_index = 0
     if end_index > len(input_list):
