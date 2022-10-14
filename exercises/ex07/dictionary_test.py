@@ -14,14 +14,14 @@ def test_invert1() -> None:
 
 def test_invert2() -> None:
     """Test for a dictionary with normal use cases."""
-    regular_dict: dict[str, str] = {'a': 'y', 'b' : 'x', 'c': 'w', 'd' : 'z'}
-    assert invert(regular_dict) == {'y': 'a', 'x' : 'b', 'w': 'c', 'z' : 'd' }
+    regular_dict: dict[str, str] = {'a': 'y', 'b': 'x', 'c': 'w', 'd': 'z'}
+    assert invert(regular_dict) == {'y': 'a', 'x': 'b', 'w': 'c', 'z': 'd'}
 
 
 def test_invert3() -> None:
     """Test for a dictionary with repeated value in origional."""
     with pytest.raises(KeyError):
-        my_dictionary = {'one': 'banana', 'two' : 'banana', 'three': 'blueberry', 'four' : 'strawberry'}
+        my_dictionary = {'one': 'banana', 'two': 'banana', 'three': 'blueberry', 'four': 'strawberry'}
         invert(my_dictionary)
 
     
@@ -55,7 +55,7 @@ def test_count2() -> None:
     assert count(input_list) == {'blue': 3, 'red': 1, 'green': 2}
 
 
-def test_count2() -> None:
+def test_count3() -> None:
     """Test for a use case with quirky lil words."""
     input_list: list[str] = ["supercalifragilisticexpialidocious", "neuropsychopharmacology", "deoxyribonucleic_acid", "neuropsychopharmacology", "hi"]
     assert count(input_list) == {'supercalifragilisticexpialidocious': 1, 'neuropsychopharmacology': 2, 'deoxyribonucleic_acid': 1, 'hi': 1}

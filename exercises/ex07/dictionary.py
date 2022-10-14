@@ -1,8 +1,6 @@
-"""Dictionary Functions and Unit Tests - Function Skeleton section 9/7/22"""
+"""Dictionary Functions and Unit Tests - Function Skeleton section 10/9/22."""
 
 __author__ = "730551195"
-
-from types import new_class
 
 
 def invert(input_dict: dict[str, str]) -> dict[str, str]:
@@ -12,8 +10,6 @@ def invert(input_dict: dict[str, str]) -> dict[str, str]:
         if input_dict[value] in new_dict:
             raise KeyError("Cannot invert because one or more input values match, which are not allowed to match when they become the key value.")
         new_dict[input_dict[value]] = value
-    for value in new_dict: #to test, remove later
-        print(f"Key: {value} -> Value: {new_dict[value]}")
     return new_dict
 
 
@@ -34,7 +30,7 @@ def favorite_color(input_colors: dict[str, str]) -> str:
     return common_color
         
     
-def count(input_list: list[str]) -> dict[str,int]:
+def count(input_list: list[str]) -> dict[str, int]:
     """Creates a dictionary where the key is a value from the list and each value is the count of the times of appearance."""
     new_dict: dict[str, int] = {}
     for value in input_list:
