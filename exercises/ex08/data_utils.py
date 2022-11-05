@@ -4,8 +4,9 @@ __author__ = "730551195"
 
 from csv import DictReader
 
+
 def read_csv_rows(filename: str) -> list[dict[str, str]]:
-    """Read rows of CSV into a 'table'"""
+    """Read rows of CSV into a 'table'."""
     result: list[dict[str, str]] = []
     file_handle = open(filename, "r", encoding="utf8")
     csv_reader = DictReader(file_handle)
@@ -28,7 +29,7 @@ def columnar(row_table: list[dict[str, str]]) -> dict[str, list[str]]:
     """Transform a row-oriented table into a column-oriented table."""
     result: dict[str, list[str]] = {}
     first_row: dict[str, str] = row_table[0]
-    for column in  first_row:
+    for column in first_row:
         result[column] = column_values(row_table, column)
     return result
 
@@ -38,10 +39,9 @@ def head(input_table: dict[str, list[str]], rows: int) -> dict[str, list[str]]:
     table: dict[str, list[str]] = {}
     for column in input_table:
         store_N_values: list[str] = []
-        i: int = 0
-        while i < rows:
-            store_N_values.append(input_table[column][i])
-            i += 1
+        for item in input_table[column]:
+            if rows > len(store_N_values):
+                store_N_values.append(item)
         table[column] = store_N_values
     return table
         
@@ -62,12 +62,13 @@ def concat(table1: dict[str, list[str]], table2: dict[str, list[str]]) -> dict[s
     for column in table2:
         if column in combined_table:
             combined_table[column] += table2[column]
-        combined_table[column] = table2[column]
+        else:
+            combined_table[column] = table2[column]
     return combined_table
 
 
 def count(to_count: list[str]) -> dict[str, int]:
-    """Function that takes a list and returns a dictionary that counts the number of times a value appeared"""
+    """Function that takes a list and returns a dictionary that counts the number of times a value appeared."""
     frequencies: dict[str, int] = {}
     for item in to_count:
         if item in frequencies:
