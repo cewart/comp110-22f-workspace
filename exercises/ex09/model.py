@@ -25,9 +25,9 @@ class Point:
         y: float = self.y + other.y
         return Point(x, y)
 
-    def distance(self, other: Point) -> int:
+    def distance(self, other: Point) -> float:
         """Returns distance between the point object the method was called upon and another point passed as a parameter."""
-        distance_between: int = sqrt((other.x - self.x)**2 + (other.y - self.y)**2)
+        distance_between: float = sqrt((other.x - self.x)**2 + (other.y - self.y)**2)
         return distance_between
 
 
@@ -43,9 +43,9 @@ class Cell:
         self.direction = direction
 
     def tick(self) -> None:
-        """Reassign to the location attribute: the result of adding current location with self.direction"""
+        """Reassign to the location attribute: the result of adding current location with self.direction."""
         self.location = self.location.add(self.direction)
-        if self.is_infected() == True:
+        if self.is_infected():
             self.sickness += 1
         if self.sickness > constants.RECOVERY_PERIOD:
             self.immunize()
@@ -70,23 +70,25 @@ class Cell:
         
     def color(self) -> str:
         """Returns "gray" if the cell is vulnerable and "maroon" if the cell is infected."""
-        if self.is_vulnerable() == True:
+        if self.is_vulnerable():
             return "gray"
-        if self.is_infected() == True:
+        if self.is_infected():
             return "maroon"
-        if self.is_immune() == True:
+        if self.is_immune():
             return "aquamarine"
+        else:
+            return "gray"
 
     def contact_with(self, other: Cell) -> None:
         """If either cell of the parameter is infected while the other is vulnerable, the other cell will become infected."""
-        if self.is_infected() == True and other.is_vulnerable() == True:
+        if self.is_infected() and other.is_vulnerable():
             other.contract_disease()
-        if other.is_infected() == True and self.is_vulnerable() == True:
+        if other.is_infected() and self.is_vulnerable():
             self.contract_disease()
 
-    def distance(self, other: Cell) -> int:
+    def distance(self, other: Cell) -> float:
         """Returns distance between the cell object the method was called upon and another cell passed as a parameter."""
-        distance_between: int = sqrt((other.location.x - self.location.x)**2 + (other.location.y - self.location.y)**2)
+        distance_between: float = sqrt((other.location.x - self.location.x)**2 + (other.location.y - self.location.y)**2)
         return distance_between
 
     def immunize(self) -> None:
@@ -100,20 +102,21 @@ class Cell:
         else:
             return False
         
+
 class Model:
     """The state of the simulation."""
     population: list[Cell]
     time: int = 0
+    infected: int = constants.INFECTED
+    immune: int = constants.IMMUNE
 
-    def __init__(self, cells: int, speed: float, infected: int, immune: int):
+    def __init__(self, cells: int, speed: float, infected: int, immune: int = 0):
         """Initialize the cells with random locations and directions."""
         self.population = []
-        infected = constants.START_INFECTED
-        if infected >= cells or infected <= 0:
+        if infected <= 0 or infected >= cells:
             raise ValueError("Some number of cells, but not all of the cells must be infected to begin.")
-        immune = constants.START_IMMUNE 
         if immune >= cells or immune < 0:
-            raise ValueError("Some number of cells, but not all of the cells must be immune to begin.")
+            raise ValueError("Zero, or some number of cells, but not all of the cells must be immune to begin.")
         for i in range(0, cells):
             start_location: Point = self.random_location()
             start_direction: Point = self.random_direction(speed)
@@ -163,14 +166,14 @@ class Model:
     def is_complete(self) -> bool:
         """Method to indicate when the simulation is complete."""
         for i in range(len(self.population)):
-            if self.population[i].is_infected() == True:
+            if self.population[i].is_infected():
                 return False
         return True
 
     def check_contacts(self) -> None:
         """Compares the distance between every teo cell's locations, and if their distance is less than their radius, then they have had contact."""
         for i in range(len(self.population)):
-            for j in range(len(self.population)):
+            for j in range(i + 1, len(self.population)):
                 if j != i:
-                    if self.population[i].distance(self.population[j]) < constants.CELL_RADIUS:
+                    if self.population[i].location.distance(self.population[j].location) < constants.CELL_RADIUS:
                         self.population[i].contact_with(self.population[j])
